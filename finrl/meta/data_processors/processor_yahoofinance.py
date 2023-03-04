@@ -265,13 +265,13 @@ class YahooFinanceProcessor:
         :param data: (df) pandas dataframe
         :return: (df) pandas dataframe
         """
-        vix_df = self.download_data(["VIXY"], self.start, self.end, self.time_interval)
+        vix_df = self.download_data(["^INDIAVIX"], self.start, self.end, self.time_interval)
         cleaned_vix = self.clean_data(vix_df)
         print("cleaned_vix\n", cleaned_vix)
         vix = cleaned_vix[["timestamp", "close"]]
         print('cleaned_vix[["timestamp", "close"]\n', vix)
-        vix = vix.rename(columns={"close": "VIXY"})
-        print('vix.rename(columns={"close": "VIXY"}\n', vix)
+        vix = vix.rename(columns={"close": "^INDIAVIX"})
+        print('vix.rename(columns={"close": "^INDIAVIX"}\n', vix)
 
         df = data.copy()
         print("df\n", df)
@@ -354,7 +354,7 @@ class YahooFinanceProcessor:
                 price_array = df[df.tic == tic][["close"]].values
                 tech_array = df[df.tic == tic][tech_indicator_list].values
                 if if_vix:
-                    turbulence_array = df[df.tic == tic]["VIXY"].values
+                    turbulence_array = df[df.tic == tic]["^INDIAVIX"].values
                 else:
                     turbulence_array = df[df.tic == tic]["turbulence"].values
                 if_first_time = False
@@ -511,7 +511,7 @@ class YahooFinanceProcessor:
         new_df = new_df.rename(columns={"index": "timestamp"})
 
         df = self.add_technical_indicator(new_df, tech_indicator_list)
-        df["VIXY"] = 0
+        df["^INDIAVIX"] = 0
 
         price_array, tech_array, turbulence_array = self.df_to_array(
             df, tech_indicator_list, if_vix=True
@@ -519,6 +519,6 @@ class YahooFinanceProcessor:
         latest_price = price_array[-1]
         latest_tech = tech_array[-1]
         start_datetime = end_datetime - datetime.timedelta(minutes=1)
-        turb_df = yf.download("VIXY", start_datetime, limit=1)
+        turb_df = yf.download("^INDIAVIX", start_datetime, limit=1)
         latest_turb = turb_df["Close"].values
         return latest_price, latest_tech, latest_turb
