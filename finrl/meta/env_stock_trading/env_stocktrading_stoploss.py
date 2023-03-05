@@ -15,6 +15,8 @@ from stable_baselines3.common.vec_env import SubprocVecEnv
 
 matplotlib.use("Agg")
 
+# instantiating the logger class 
+logger = logger.Logger()
 
 class StockTradingEnvStopLoss(gym.Env):
     """
