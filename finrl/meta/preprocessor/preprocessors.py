@@ -191,7 +191,7 @@ class FeatureEngineer:
         """
         df = data.copy()
         df_vix = YahooDownloader(
-            start_date=df.date.min(), end_date=df.date.max(), ticker_list=["^VIX"]
+            start_date=df.date.min(), end_date=df.date.max(), ticker_list=["^INDIAVIX"]
         ).fetch_data()
         vix = df_vix[["date", "close"]]
         vix.columns = ["date", "vix"]
