@@ -16,7 +16,7 @@ from stable_baselines3.common.vec_env import SubprocVecEnv
 matplotlib.use("Agg")
 
 # instantiating the logger class 
-logger = logger.configure()
+_logger = logger.configure()
 
 class StockTradingEnvStopLoss(gym.Env):
     """
@@ -186,31 +186,31 @@ class StockTradingEnvStopLoss(gym.Env):
         self.log_step(reason=reason, terminal_reward=reward)
         # Add outputs to logger interface
         gl_pct = self.account_information["total_assets"][-1] / self.initial_amount
-        logger.record("environment/GainLoss_pct", (gl_pct - 1) * 100)
-        logger.record(
+        _logger.record("environment/GainLoss_pct", (gl_pct - 1) * 100)
+        _logger.record(
             "environment/total_assets",
             int(self.account_information["total_assets"][-1]),
         )
         reward_pct = self.account_information["total_assets"][-1] / self.initial_amount
-        logger.record("environment/total_reward_pct", (reward_pct - 1) * 100)
-        logger.record("environment/total_trades", self.sum_trades)
-        logger.record(
+        _logger.record("environment/total_reward_pct", (reward_pct - 1) * 100)
+        _logger.record("environment/total_trades", self.sum_trades)
+        _logger.record(
             "environment/actual_num_trades",
             self.actual_num_trades,
         )
-        logger.record(
+        _logger.record(
             "environment/avg_daily_trades",
             self.sum_trades / (self.current_step),
         )
-        logger.record(
+        _logger.record(
             "environment/avg_daily_trades_per_asset",
             self.sum_trades / (self.current_step) / len(self.assets),
         )
-        logger.record("environment/completed_steps", self.current_step)
-        logger.record(
+        _logger.record("environment/completed_steps", self.current_step)
+        _logger.record(
             "environment/sum_rewards", np.sum(self.account_information["reward"])
         )
-        logger.record(
+        _logger.record(
             "environment/cash_proportion",
             self.account_information["cash"][-1]
             / self.account_information["total_assets"][-1],
