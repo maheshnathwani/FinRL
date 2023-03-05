@@ -1,3 +1,4 @@
+( For Indian Markets )
 This folder has three subfolders:
 + applications: trading tasks,
 + agents: DRL algorithms, from ElegantRL, RLlib, or Stable Baselines 3 (SB3). Users can plug in any DRL lib and play.
